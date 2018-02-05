@@ -1,0 +1,16 @@
+---
+#    - name: configurer l'accès Web
+#      expect:
+#       command: htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
+#       responses:
+#        (?i)password: "rootnagios"
+
+#    - apache2_module:
+#        state: present
+#        name: cgi
+
+#    - name: Redemarrer apache
+#      service:
+#        name: apache2
+#        state: restarted
+

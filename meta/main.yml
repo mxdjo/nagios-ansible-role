@@ -1,0 +1,12 @@
+---
+#meta for nagiosrole
+
+galaxy_info
+  author: Mario Fadegnon
+  description: Role to install ansible
+  company: Mario Fadegnon
+  licence: Creative Commons BY SA
+  plateforms:
+   - name : Debian
+     versions:
+       - stretch

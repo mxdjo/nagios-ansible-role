@@ -1,0 +1,16 @@
+    - name: Telecharger et desarchiver nagios-plugins.tar.gz
+      unarchive:
+        src: https://nagios-plugins.org/download/nagios-plugins-2.2.1.tar.gz
+        dest: ~
+        remote_src: true
+
+    - name : lancer le script de configuration
+      command: ./configure --with-nagios-user=nagios --with-nagios-group=nagios
+      args:
+       chdir: ~/nagios-plugins-2.2.1
+    - make:
+        chdir: ~/nagios-plugins-2.2.1
+    - make :
+       target: install
+       chdir: ~/nagios-plugins-2.2.1
+

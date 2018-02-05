@@ -1,0 +1,129 @@
+---
+# tasks file for nagiosrole
+- hosts: serveradress
+
+- become: yes
+  become_method: su 
+
+- tasks:
+    - name: Installer build-essential sous Ubuntu 16.04
+      apt:
+          name: build-essential
+          state: present
+
+    - name: Installer php sous Ubuntu 16.04
+      apt:
+          name: php
+          state: present
+
+    - name: Installer openssl sous Ubuntu 16.04
+      apt:
+          name: openssl
+          state: present
+
+    - name: Installer Perl sous Ubuntu 16.04
+      apt:
+          name: perl
+          state: present
+
+    - name: Installer make
+      apt:
+          name: make
+          state: present
+
+    - name: installer unzip
+      apt:
+        name: unzip
+        state: present
+
+    - name: Installer php-gd
+      apt:
+        name: php-gd
+        state: present
+
+    - name: Installer libgd2-xpm-dev
+      apt:
+          name: libgd2-xpm-dev
+          state: present
+    - name: Installer libapache2-mod-php
+      apt:
+          name: libapache2-mod-php
+          state: present
+    - name: Installer libperl-dev
+      apt:
+          name: libperl-dev
+          state: present
+   
+    - name: Installer libssl-dev
+      apt:
+          name: libssl-dev
+          state: present
+
+    - name: Installer libc6-dev
+      apt:
+          name: libc6-dev
+          state: present
+
+    - name: Installer wget
+      apt:
+          name: wget
+          state: present
+
+    - name: Installer daemon
+      apt:
+          name: daemon
+          state: present
+
+    - name: Installer apache2-utils
+      apt:
+          name: apache2-utils
+          state: present
+
+    - name: installer pip
+      apt :
+       name: python-pip
+       state: present
+
+    - name: install pexpect
+      pip:
+          name: pexpect
+          state: present
+
+#Créer le group nagcmd
+    - name: créer le groupe nagcmd
+      group:
+        name: nagcmd
+        state: present
+
+#Créer l'utilisateur Nagios
+    - name: créer l'utilisateur nagios
+      user:
+         name: nagios
+         state: present
+         groups: nagcmd
+
+    - name: ajouter www-data à nagcmd
+      user:
+         name: www-data
+         groups: www-data,nagcmd
+
+
+# build and install nagios.
+    - include: build-nagios.yml
+
+#Configure access to web interface of nagios 
+    - include: config-web.yml
+
+# Build and install nagios check plugins.
+    - include: build-plugins.yml
+
+- tasks:
+    - name: démarrer nagios
+      service:
+       name: nagios
+       state: started
+    - name: Activer nagios au démarrage
+      systemd:
+       name: nagios
+       state: started
+

@@ -1,0 +1,40 @@
+    - name: télécharger nagios4
+      get_url:
+        url: https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.3.4.tar.gz
+        dest: ~/nagios-4.3.4.tar.gz
+
+    - name: Desarchiver nagios.tar.gz
+      unarchive:
+       src: ~/nagios-4.3.4.tar.gz
+       dest: ~
+       remote_src: true
+
+    - name: lancer le script de configuration
+      command: ./configure --with-nagios-group=nagios --with-command-group=nagcmd --with-httpd_conf=/etc/apache2/sites-enabled/
+      args:
+       chdir: ~/nagios-4.3.4/
+
+    - make:
+        target: all
+        chdir: ~/nagios-4.3.4/
+
+    - make :
+       target: install
+       chdir: ~/nagios-4.3.4
+
+    - make :
+       target : install-init
+       chdir: ~/nagios-4.3.4
+
+    - make :
+       target : install-config
+       chdir: ~/nagios-4.3.4
+
+    - make :
+       target : install-commandmode
+       chdir: ~/nagios-4.3.4
+
+    - make:
+       target : install-webconf
+       chdir: ~/nagios-4.3.4
+
